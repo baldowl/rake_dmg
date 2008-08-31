@@ -1,0 +1,15 @@
+The best way to programmatically create the smallest DMG seems to be:
+
+  hdiutil create -srcdir <source directory> \
+    -volname <volume name> \
+    -uid 99 -gid 99 \
+    <image name>
+
+This command create a compressed DMG using the same filesystem of <em><source
+directory></em>, if possibile. The final image file is the smallest one able
+to contain all the content of <em><source directory></em>.
+
+The user and group id values (99 and 99, respectively) map to the "magic"
++unknown+ user and group which, if I understand the system documentation
+correctly, should be "replaced" at mount time by the disk arbitration with the
+user who mount the DMG.
