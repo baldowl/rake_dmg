@@ -1,4 +1,4 @@
-The best way to programmatically create the smallest DMG seems to be:
+The simplest way to programmatically create the smallest DMG seems to be:
 
   hdiutil create -srcdir <source directory> \
     -volname <volume name> \
@@ -13,3 +13,18 @@ The user and group id values (99 and 99, respectively) map to the "magic"
 +unknown+ user and group which, if I understand the system documentation
 correctly, should be "replaced" at mount time by the disk arbitration with the
 user who mount the DMG.
+
+why the lucky stiff, author of Shoes, uses a rather complex, automatic build
+system written in Ruby, based on Rake with a Perl script called +pkg-dmg+
+which handles all the details of DMG creation. why uses it in the following
+way:
+
+  pkg-dmg --target pkg/#{PKG}.dmg --source dmg --volname '#{APPNAME}' \
+    --copy platform/mac/dmg_ds_store:/.DS_Store --mkdir /.background \
+    --copy static/shoes-dmg.jpg:/.background
+
+Here the application to package is inside the +dmg+ directory. The first
+<tt>--copy</tt> puts a handmade ds_store file into the directory used to build
+the final DMG file; this seems to be the only way to customize DMG's look. The
+last <tt>--copy</tt> puts the image used as background, referenced by the
+custom ds_store file.
