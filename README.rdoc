@@ -1,3 +1,13 @@
+= Rake DMG library
+
+In the long rung this code should become an amateurish prototype of a Rake
+library to easily build DMG files.
+
+At the moment this Git repository is going to become the receptacle for many
+experiments.
+
+== Some notes for myself
+
 The simplest way to programmatically create the smallest DMG seems to be:
 
   hdiutil create -srcdir <source directory> \
