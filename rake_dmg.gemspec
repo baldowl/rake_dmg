@@ -12,7 +12,7 @@ authors:
 autorequire: 
 bindir: bin
 
-date: 2008-09-08 00:00:00 +02:00
+date: 2008-09-10 00:00:00 +02:00
 default_executable: 
 dependencies: 
 - !ruby/object:Gem::Dependency 
@@ -23,7 +23,7 @@ dependencies:
     requirements: 
     - - ">="
       - !ruby/object:Gem::Version 
-        version: "0"
+        version: 0.8.2
     version: 
 - !ruby/object:Gem::Dependency 
   name: echoe
