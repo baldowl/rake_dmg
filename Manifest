@@ -1,3 +1,4 @@
+lib/rake/dmg.rb
 Manifest
 rake_dmg.gemspec
 Rakefile

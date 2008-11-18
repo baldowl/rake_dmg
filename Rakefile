@@ -8,6 +8,7 @@ Echoe.new('rake_dmg', '0.0.0') do |s|
   s.runtime_dependencies = ['rake >=0.8.2']
   s.need_tar_gz = false
   s.project = nil
+  s.gemspec_format = :yaml
 end
 
 require 'spec/rake/spectask'
