@@ -8,7 +8,7 @@ authors:
 autorequire: 
 bindir: bin
 
-date: 2008-11-18 00:00:00 +01:00
+date: 2008-11-30 00:00:00 +01:00
 default_executable: 
 dependencies: 
 - !ruby/object:Gem::Dependency 
@@ -46,6 +46,9 @@ files:
 - rake_dmg.gemspec
 - Rakefile
 - README.rdoc
+- spec/dmg_spec.rb
+- spec/spec.opts
+- spec/spec_helper.rb
 has_rdoc: true
 homepage: ""
 post_install_message: 
