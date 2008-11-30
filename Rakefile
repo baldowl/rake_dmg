@@ -14,7 +14,7 @@ end
 require 'spec/rake/spectask'
 
 Spec::Rake::SpecTask.new do |t|
-  t.spec_opts = %w(-c)
+  t.spec_opts = %w(-o spec/spec.opts)
 end
 
 Rake::Task[:default].clear
