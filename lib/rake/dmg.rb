@@ -19,6 +19,13 @@ module Rake
   # [<b>:rebuild_dmg</b>]
   #   Rebuild the disk image from scratch.
   #
+  # Other tasks are created as prerequisites of the main ones and can safely
+  # be ignored.
+  #
+  # Most of the attributes/characteristics of the DmgTask object *must* be set
+  # upon creation via the optional block; altering them afterward has no
+  # effect.
+  #
   # Example:
   #
   #   Rake::DmgTask.new("pimpernel", :noversion) do |p|
@@ -110,18 +117,23 @@ module Rake
       self
     end
 
+    # DMG volume name.
     def dmg_name
       @version ? "#{@name}-#{@version}" : @name
     end
 
+    # DMG file name.
     def dmg_file
       dmg_name + '.dmg'
     end
 
+    # Build options for +dmg_command+, tailored to hdiutil.
     def dmg_options
       "-srcdir #{dmg_name} -ov -volname #{name} -uid 99 -gid 99 #{dmg_file}"
     end
 
+    # Temporary directory used to gather the DMG's content before actual
+    # building.
     def dmg_dir_path
       "#{package_dir}/#{dmg_name}"
     end
