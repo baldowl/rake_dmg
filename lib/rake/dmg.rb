@@ -55,6 +55,15 @@ module Rake
     # System utility used to build the DMG file (default: hdiutil).
     attr_accessor :dmg_command
 
+    # We have administration rights (default: false; this setting is checked
+    # only by the +dmg_options+ method).
+    attr_accessor :admin_rights
+
+    # DMG build options (default tailored to hdiutil; see +dmg_options+
+    # implementation). Assigning any value to this attribute temporarily
+    # switch off the default ones.
+    attr_writer :dmg_options
+
     # Create a Package Task with the given name and version.
     def initialize(name=nil, version=nil)
       @name = name
@@ -63,6 +72,8 @@ module Rake
       @source_files = Rake::FileList.new
       @extra_source_files = {}
       @dmg_command = 'hdiutil'
+      @admin_rights = false
+      @dmg_options = nil
       yield self if block_given?
       define_tasks unless name.nil?
     end
@@ -129,7 +140,9 @@ module Rake
 
     # Build options for +dmg_command+, tailored to hdiutil.
     def dmg_options
-      "-srcdir #{dmg_name} -ov -volname #{name} -uid 99 -gid 99 #{dmg_file}"
+      @dmg_options || "-srcdir #{dmg_name} -ov -volname #{name} " +
+        "#{admin_rights ? '-uid 99 -gid 99' : '' } " + 
+        "#{dmg_file}"
     end
 
     # Temporary directory used to gather the DMG's content before actual

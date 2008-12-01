@@ -151,6 +151,40 @@ describe "A Rake::DmgTask object" do
     @pimpernel.dmg_command.should eql('whatever_you_want')
   end
 
+  it "should default to not have administration rights" do
+    @rose.admin_rights.should be_false
+  end
+
+  it "should allow setting administration rights on creation" do
+    custom_pkg_dmg = Rake::DmgTask.new 'cyclamen', :noversion do |dmg|
+      dmg.admin_rights = true
+    end
+    custom_pkg_dmg.admin_rights.should be_true
+  end
+
+  it "should allow setting administration rights after creation" do
+    @rose.admin_rights.should be_false
+    @rose.admin_rights = true
+    @rose.admin_rights.should be_true
+  end
+
+  it "should change DMG build options based on administration rights presence" do
+    old_options = @rose.dmg_options
+    @rose.admin_rights = true
+    @rose.dmg_options.should_not eql(old_options)
+    @rose.admin_rights = false
+    @rose.dmg_options.should eql(old_options)
+  end
+
+  it "should allow setting totally new DMG build options any time" do
+    old_options = @rose.dmg_options
+    new_options = '-not -really -options'
+    @rose.dmg_options = new_options
+    @rose.dmg_options.should eql(new_options)
+    @rose.dmg_options = nil
+    @rose.dmg_options.should eql(old_options)
+  end
+
   it "should create the volume name" do
     @rose.dmg_name.should eql('rose')
     @pimpernel.dmg_name.should eql('pimpernel-0.1')
