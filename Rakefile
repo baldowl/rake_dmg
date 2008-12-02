@@ -5,7 +5,8 @@ Echoe.new('rake_dmg', '0.0.0') do |s|
   s.author = 'Emanuele Vicentini'
   s.email = 'emanuele.vicentini@gmail.com'
   s.summary = 'Rake library to build DMG files'
-  s.runtime_dependencies = ['rake >=0.8.2']
+  s.runtime_dependencies = ['rake']
+  s.development_dependencies += ['rake >=0.8.2', 'rspec']
   s.need_tar_gz = false
   s.project = nil
   s.gemspec_format = :yaml

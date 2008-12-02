@@ -8,7 +8,7 @@ authors:
 autorequire: 
 bindir: bin
 
-date: 2008-11-30 00:00:00 +01:00
+date: 2008-12-02 00:00:00 +01:00
 default_executable: 
 dependencies: 
 - !ruby/object:Gem::Dependency 
@@ -19,10 +19,30 @@ dependencies:
     requirements: 
     - - ">="
       - !ruby/object:Gem::Version 
-        version: 0.8.2
+        version: "0"
     version: 
 - !ruby/object:Gem::Dependency 
   name: echoe
+  type: :development
+  version_requirement: 
+  version_requirements: !ruby/object:Gem::Requirement 
+    requirements: 
+    - - ">="
+      - !ruby/object:Gem::Version 
+        version: "0"
+    version: 
+- !ruby/object:Gem::Dependency 
+  name: rake
+  type: :development
+  version_requirement: 
+  version_requirements: !ruby/object:Gem::Requirement 
+    requirements: 
+    - - ">="
+      - !ruby/object:Gem::Version 
+        version: 0.8.2
+    version: 
+- !ruby/object:Gem::Dependency 
+  name: rspec
   type: :development
   version_requirement: 
   version_requirements: !ruby/object:Gem::Requirement 
