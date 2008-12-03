@@ -1,23 +1,99 @@
 = Rake DMG library
 
-In the long rung this code should become an amateurish prototype of a Rake
-library to easily build DMG files.
+DmgTask is a Rake library which aims to ease the building of DMG files for
+projects, applications and whatever you throw at it.
 
-At the moment this Git repository is going to become the receptacle for many
-experiments.
+== Basic usage
 
-== Some notes for myself
+  require 'rake/dmg'
 
-The simplest way to programmatically create the smallest DMG seems to be:
+  Rake::DmgTask.new 'pimpernel', '0.1.2' do |dmg|
+    dmg.source_files.include 'build/**/*'
+    dmg.source_files.exclude 'pkg'
+    dmg.strip = 'build'
+    dmg.extra_source_files = {'resources/ds_store' => '/.DS_Store',
+      'resources/background.png' => '/.background/background.png',
+      'doc/quickstart.pdf' => 'guide.pdf'}
+  end
+
+You can:
+
+* specify name and optional version string for the DMG file;
+* specify files to be included using Rake's really flexible FileList;
+* specify extra files to be added to the final DMG file.
+
+The last point means you are able to customize the DMG adding documentation,
+licence file, background images, etc.
+
+== Motivations
+
+Building a DMG is rather simple and every library/framework probably has some
+mechanism to automate the process. For example, RubyCocoa projects and
+Rucola-based projects (and HotCocoa ones, maybe?) provides Rake tasks like the
+following ones:
+
+  # RubyCocoa
+
+  desc "Package the application"
+  task :package => ["xcode:build:#{DEFAULT_TARGET}:#{RELEASE_CONFIGURATION}", "pkg"] do
+    name = "#{APPNAME}.#{APPVERSION}"
+    mkdir "image"
+    sh %{rubycocoa standaloneify "build/#{DEFAULT_CONFIGURATION}/#{APPNAME}.app" "image/#{APPNAME}.app"}
+    puts 'Creating Image...'
+    sh %{
+    hdiutil create -volname '#{name}' -srcfolder image '#{name}'.dmg
+    rm -rf image
+    mv '#{name}.dmg' pkg
+    }
+  end
+
+  # Rucola
+
+  desc "Package the application as a disk image"
+  task :package => :pkg do
+    FileUtils.rm(PKG) if File.exist?(PKG)
+    puts 'Creating Image...'
+    sh "hdiutil create -volname '#{DEPLOY_NAME}' -srcfolder 'build/Release/#{TARGET}' '#{PKG}'"
+    puts ''
+  end
+
+Both works flowlessly but you cannot customize the final DMG file. Using Rake
+0.8.2 or later and this library we can change the situation:
+
+  # RubyCocoa
+  Rake::Task[:package].clear_actions
+  task :package => :dmg
+  Rake::DmgTask.new APPNAME, APPVERSION do |p|
+    p.source_files.include "build/#{DEFAULT_CONFIGURATION}/#{APPNAME}.app/**/*"
+    p.strip = "build/#{DEFAULT_CONFIGURATION}"
+    p.extra_source_files = {'extra/LICENCE.rtf' => 'LICENCE.rtf'}
+  end
+
+  # Rucola
+  Rake::Task['deploy:package'].clear_actions
+  namespace :deploy do
+    task :package => :dmg
+    Rake::DmgTask.new APPNAME, APPVERSION do |p|
+      p.source_files.include "build/Release/#{TARGET}/**/*"
+      p.strip = 'build/Release'
+      p.extra_source_files = {'extra/LICENCE.rtf' => 'LICENCE.rtf'}
+    end
+  end
+
+== Some notes about basic DMG building
+
+The simplest way to programmatically create the smallest not-compressed DMG
+seems to be:
 
   hdiutil create -srcdir <source directory> \
     -volname <volume name> \
     -uid 99 -gid 99 \
     <image name>
 
-This command create a compressed DMG using the same filesystem of <em><source
-directory></em>, if possibile. The final image file is the smallest one able
-to contain all the content of <em><source directory></em>.
+This command create a zlib-compressed DMG file (UDZO format) using the same
+filesystem of <em><source directory></em>, if possibile. The final image file
+is the smallest one able to contain all the content of <em><source
+directory></em>.
 
 The user and group id values (99 and 99, respectively) map to the "magic"
 +unknown+ user and group which, if I understand the system documentation
@@ -26,8 +102,9 @@ user who mount the DMG.
 
 why the lucky stiff, author of Shoes, uses a rather complex, automatic build
 system written in Ruby, based on Rake with a Perl script called +pkg-dmg+
-which handles all the details of DMG creation. why uses it in the following
-way:
+which handles all the details of DMG creation; this wonderful script is
+complex and makes provision for backward compatibility. why uses it in the
+following way:
 
   pkg-dmg --target pkg/#{PKG}.dmg --source dmg --volname '#{APPNAME}' \
     --copy platform/mac/dmg_ds_store:/.DS_Store --mkdir /.background \
