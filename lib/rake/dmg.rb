@@ -64,6 +64,10 @@ module Rake
     # switch off the default ones.
     attr_writer :dmg_options
 
+    # Path prefix to strip from each file name in the final DMG file (default:
+    # nil).
+    attr_accessor :strip
+
     # Create a Package Task with the given name and version.
     def initialize(name=nil, version=nil)
       @name = name
@@ -74,6 +78,7 @@ module Rake
       @dmg_command = 'hdiutil'
       @admin_rights = false
       @dmg_options = nil
+      @strip = nil
       yield self if block_given?
       define_tasks unless name.nil?
     end
@@ -95,9 +100,11 @@ module Rake
       directory package_dir
 
       file dmg_dir_path => source_files + extra_source_files.keys do
+        prefix_to_strip = /^#{@strip}/ if @strip
         mkdir_p package_dir rescue nil
         source_files.each do |fn|
-          f = File.join(dmg_dir_path, fn)
+          fn_stripped = @strip == nil ? fn : fn.sub(prefix_to_strip, '')
+          f = File.join(dmg_dir_path, fn_stripped)
           fdir = File.dirname(f)
           mkdir_p(fdir) if !File.exist?(fdir)
           if File.directory?(fn)

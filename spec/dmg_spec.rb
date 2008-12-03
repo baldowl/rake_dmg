@@ -185,6 +185,19 @@ describe "A Rake::DmgTask object" do
     @rose.dmg_options.should eql(old_options)
   end
 
+  it "should default to empty strip prefix" do
+    @rose.strip.should be_nil
+  end
+
+  it "should allow setting strip prefix any time" do
+    old_strip = @rose.strip
+    new_strip = 'path/to/stip/out'
+    @rose.strip = new_strip
+    @rose.strip.should eql(new_strip)
+    @rose.strip = old_strip
+    @rose.strip.should eql(old_strip)
+  end
+
   it "should create the volume name" do
     @rose.dmg_name.should eql('rose')
     @pimpernel.dmg_name.should eql('pimpernel-0.1')
