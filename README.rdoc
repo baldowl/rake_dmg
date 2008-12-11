@@ -33,7 +33,6 @@ Rucola-based projects (and HotCocoa ones, maybe?) provides Rake tasks like the
 following ones:
 
   # RubyCocoa
-
   desc "Package the application"
   task :package => ["xcode:build:#{DEFAULT_TARGET}:#{RELEASE_CONFIGURATION}", "pkg"] do
     name = "#{APPNAME}.#{APPVERSION}"
@@ -48,7 +47,6 @@ following ones:
   end
 
   # Rucola
-
   desc "Package the application as a disk image"
   task :package => :pkg do
     FileUtils.rm(PKG) if File.exist?(PKG)
@@ -82,8 +80,7 @@ Both works flowlessly but you cannot customize the final DMG file. Using Rake
 
 == Some notes about basic DMG building
 
-The simplest way to programmatically create the smallest not-compressed DMG
-seems to be:
+The simplest way to programmatically create the smallest DMG file is:
 
   hdiutil create -srcdir <source directory> \
     -volname <volume name> \
@@ -103,8 +100,8 @@ user who mount the DMG.
 why the lucky stiff, author of Shoes, uses a rather complex, automatic build
 system written in Ruby, based on Rake with a Perl script called +pkg-dmg+
 which handles all the details of DMG creation; this wonderful script is
-complex and makes provision for backward compatibility. why uses it in the
-following way:
+complex and makes provision for backward compatibility (which this library
+does not). why uses it in the following way:
 
   pkg-dmg --target pkg/#{PKG}.dmg --source dmg --volname '#{APPNAME}' \
     --copy platform/mac/dmg_ds_store:/.DS_Store --mkdir /.background \
