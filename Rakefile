@@ -1,7 +1,8 @@
 require 'rubygems'
 require 'echoe'
+require 'lib/rake/dmg'
 
-Echoe.new('rake_dmg', '0.0.0') do |s|
+Echoe.new('rake_dmg', Rake::DmgTask::VERSION) do |s|
   s.author = 'Emanuele Vicentini'
   s.email = 'emanuele.vicentini@gmail.com'
   s.summary = 'Rake library to build DMG files'

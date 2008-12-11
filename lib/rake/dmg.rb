@@ -35,6 +35,9 @@ module Rake
   #   end
   #
   class DmgTask
+    # This library's version number.
+    VERSION = '0.0.0'
+
     # Name of the disk image (required).
     attr_accessor :name
 
