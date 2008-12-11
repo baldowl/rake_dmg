@@ -1,4 +1,5 @@
 lib/rake/dmg.rb
+LICENSE.rdoc
 Manifest
 rake_dmg.gemspec
 Rakefile
