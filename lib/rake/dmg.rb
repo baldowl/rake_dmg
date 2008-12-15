@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-# Define a DMG task libarary to automate the creation of disk images.
+# Define a DMG task library to automate the creation of disk images.
 
 require 'rake'
 
@@ -36,7 +36,7 @@ module Rake
   #
   class DmgTask
     # This library's version number.
-    VERSION = '0.0.0'
+    VERSION = '0.0.1'
 
     # Name of the disk image (required).
     attr_accessor :name
