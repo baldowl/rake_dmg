@@ -1,14 +1,14 @@
 --- !ruby/object:Gem::Specification 
 name: rake_dmg
 version: !ruby/object:Gem::Version 
-  version: 0.0.0
+  version: 0.0.1
 platform: ruby
 authors: 
 - Emanuele Vicentini
 autorequire: 
 bindir: bin
 
-date: 2008-12-02 00:00:00 +01:00
+date: 2008-12-15 00:00:00 +01:00
 default_executable: 
 dependencies: 
 - !ruby/object:Gem::Dependency 
@@ -59,9 +59,11 @@ extensions: []
 
 extra_rdoc_files: 
 - lib/rake/dmg.rb
+- LICENSE.rdoc
 - README.rdoc
 files: 
 - lib/rake/dmg.rb
+- LICENSE.rdoc
 - Manifest
 - rake_dmg.gemspec
 - Rakefile
