@@ -11,6 +11,9 @@ Echoe.new('rake_dmg', Rake::DmgTask::VERSION) do |s|
   s.need_tar_gz = false
   s.project = nil
   s.gemspec_format = :yaml
+  s.retain_gemspec = true
+  s.rdoc_pattern = /^README|^LICENSE/
+  s.url = 'http://github.com/baldowl/rake_dmg'
 end
 
 require 'spec/rake/spectask'
