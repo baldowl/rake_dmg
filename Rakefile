@@ -9,7 +9,7 @@ Echoe.new('rake_dmg', Rake::DmgTask::VERSION) do |s|
   s.runtime_dependencies = ['rake']
   s.development_dependencies += ['rake >=0.8.2', 'rspec']
   s.need_tar_gz = false
-  s.project = nil
+  s.project = 'rakedmg'
   s.gemspec_format = :yaml
   s.retain_gemspec = true
   s.rdoc_pattern = /^README|^LICENSE/

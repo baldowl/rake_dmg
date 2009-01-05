@@ -1,14 +1,14 @@
 --- !ruby/object:Gem::Specification 
 name: rake_dmg
 version: !ruby/object:Gem::Version 
-  version: 0.0.1
+  version: 0.0.2
 platform: ruby
 authors: 
 - Emanuele Vicentini
 autorequire: 
 bindir: bin
 
-date: 2008-12-15 00:00:00 +01:00
+date: 2009-01-05 00:00:00 +01:00
 default_executable: 
 dependencies: 
 - !ruby/object:Gem::Dependency 
@@ -58,7 +58,6 @@ executables: []
 extensions: []
 
 extra_rdoc_files: 
-- lib/rake/dmg.rb
 - LICENSE.rdoc
 - README.rdoc
 files: 
@@ -72,7 +71,7 @@ files:
 - spec/spec.opts
 - spec/spec_helper.rb
 has_rdoc: true
-homepage: ""
+homepage: http://github.com/baldowl/rake_dmg
 post_install_message: 
 rdoc_options: 
 - --line-numbers
@@ -97,7 +96,7 @@ required_rubygems_version: !ruby/object:Gem::Requirement
   version: 
 requirements: []
 
-rubyforge_project: 
+rubyforge_project: rakedmg
 rubygems_version: 1.3.1
 specification_version: 2
 summary: Rake library to build DMG files

@@ -5,6 +5,12 @@ projects, applications and whatever you throw at it.
 
 == Basic usage
 
+Firse, install it with:
+
+  $ sudo gem install rake_dmg
+
+Then, write something like the following code in a Rakefile:
+
   require 'rake/dmg'
 
   Rake::DmgTask.new 'pimpernel', '0.1.2' do |dmg|
@@ -98,10 +104,10 @@ correctly, should be "replaced" at mount time by the disk arbitration with the
 user who mount the DMG.
 
 why the lucky stiff, author of Shoes, uses a rather complex, automatic build
-system written in Ruby, based on Rake with a Perl script called +pkg-dmg+
-which handles all the details of DMG creation; this wonderful script is
-complex and makes provision for backward compatibility (which this library
-does not). why uses it in the following way:
+system written in Ruby, based on Rake with a Perl script called
+<tt>pkg-dmg</tt> which handles all the details of DMG creation; this wonderful
+script is complex and makes provision for backward compatibility (which this
+library does not). why uses it in the following way:
 
   pkg-dmg --target pkg/#{PKG}.dmg --source dmg --volname '#{APPNAME}' \
     --copy platform/mac/dmg_ds_store:/.DS_Store --mkdir /.background \
