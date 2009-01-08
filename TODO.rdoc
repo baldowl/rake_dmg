@@ -1,0 +1,17 @@
+= Things to do (not prioritized)
+
+* Switching to UDBZ format? This move would introduce the requirement of OS X
+  10.4+.
+
+* Increasing the compression-level (default to 1 (fastest)) for the UBZO
+  format or allow the user to set it?
+
+* Allowing the user to set a licence agreement for the whole DMG file? The
+  simplest way allows only a single, English licence; see
+  ftp://ftp.apple.com/developer/Development_Kits/SLAs_for_UDIFs_1.0.dmg for
+  extras.
+
+* Reworking the internal machinery to enable runtime detection of source
+  files? At the moment, it's not possible to chain the "build" target of a
+  project and the dmg target provided by Rake::DmgTask: building the project
+  and packaging it in a DMG *must* be done in two distinct Rake runs.
