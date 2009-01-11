@@ -3,6 +3,7 @@ require 'spec'
 require File.dirname(__FILE__) + '/../lib/rake/dmg'
 
 module RakeTaskMatchers
+  # Custom matcher to check for tasks being defined or not.
   class BeDefined
     def matches?(task_name)
       @task_name = task_name
@@ -16,10 +17,14 @@ module RakeTaskMatchers
     end
   end
 
+  # True if the tested string is the name of a Rake task.
+  #
+  #   'wonderland'.should be_defined
   def be_defined
     BeDefined.new
   end
 
+  # Custom matcher to check if a given task has specific prerequisites.
   class HavePrerequisites
     def initialize(prereq_tasks)
       @prereq_tasks = prereq_tasks
@@ -38,6 +43,11 @@ module RakeTaskMatchers
     end
   end
 
+  # True if the tested string is the name of a Rake task with some specific
+  # prerequisites.
+  #
+  #   'lock_the_dor'.should have_prerequisites('pick_up_the_keys')
+  #   'have_breakfast'.should have_prerequisites('wake_up', 'get_up')
   def have_prerequisites(*prereq_tasks)
     HavePrerequisites.new prereq_tasks
   end
