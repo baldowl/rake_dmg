@@ -15,3 +15,6 @@
   files? At the moment, it's not possible to chain the "build" target of a
   project and the dmg target provided by Rake::DmgTask: building the project
   and packaging it in a DMG *must* be done in two distinct Rake runs.
+
+* Trying out Cucumber? Maybe it could be feasible way to really exercise the
+  tasks' code.
