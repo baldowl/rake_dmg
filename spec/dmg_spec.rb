@@ -23,7 +23,7 @@ describe "Rake::DmgTask" do
     lambda {Rake::DmgTask.new 'pimpernel', :noversion}.should_not raise_error
   end
 
-  describe do
+  describe '' do
     before do
       Rake::Task.clear
       Rake::DmgTask.new 'pimpernel', :noversion

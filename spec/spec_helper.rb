@@ -31,8 +31,8 @@ module RakeTaskMatchers
     end
     def matches?(task_name)
       @task_name = task_name
-      @prereq_tasks.each do |t|
-        return false if !Rake::Task[@task_name].prerequisites.include?(t)
+      @prereq_tasks.all? do |t|
+        Rake::Task[@task_name].prerequisites.include?(t)
       end
     end
     def failure_message
