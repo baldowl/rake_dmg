@@ -1,12 +1,10 @@
 require 'rake/clean'
-require 'spec/rake/spectask'
+require 'rspec/core/rake_task'
 require 'lib/rake/dmg'
 require 'rake/rdoctask'
 require 'jeweler'
 
-Spec::Rake::SpecTask.new do |t|
-  t.spec_opts = %w(-O spec/spec.opts)
-end
+RSpec::Core::RakeTask.new
 
 task :spec => :check_dependencies
 task :default => :spec
@@ -28,7 +26,7 @@ Jeweler::Tasks.new do |gem|
   gem.authors = ['Emanuele Vicentini']
   gem.rubyforge_project = 'rakedmg'
   gem.add_dependency 'rake'
-  gem.add_development_dependency 'rspec'
+  gem.add_development_dependency 'rspec', '>= 2.0.0'
   gem.rdoc_options << '--line-numbers' << '--inline-source' << '--title' <<
     "Rake::Dmg #{Rake::DmgTask::VERSION}" << '--main' << 'README.rdoc'
   gem.test_files.clear

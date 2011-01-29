@@ -1,6 +1,7 @@
 require 'rubygems'
-require 'spec'
-require File.dirname(__FILE__) + '/../lib/rake/dmg'
+require 'rspec'
+
+require 'rake/dmg'
 
 module RakeTaskMatchers
   # Custom matcher to check for tasks being defined or not.
@@ -53,6 +54,6 @@ module RakeTaskMatchers
   end
 end
 
-Spec::Runner.configure do |conf|
+RSpec.configure do |conf|
   conf.include RakeTaskMatchers
 end
