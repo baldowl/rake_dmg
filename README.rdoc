@@ -1,4 +1,4 @@
-= Rake DMG library
+= Rake DMG library {<img src="https://travis-ci.org/baldowl/rake_dmg.png?branch=master" alt="Build Status" />}[https://travis-ci.org/baldowl/rake_dmg] {<img src="https://badge.fury.io/rb/rake_dmg.png" alt="Gem Version" />}[http://badge.fury.io/rb/rake_dmg]
 
 DmgTask is a Rake library which aims to ease the building of DMG files for
 projects, applications and whatever you throw at it.
