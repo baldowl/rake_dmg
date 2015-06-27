@@ -35,6 +35,8 @@ module Rake
   #   end
   #
   class DmgTask
+    include Rake::DSL
+
     # Name of the disk image (required).
     attr_accessor :name
 
