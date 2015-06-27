@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/spec_helper.rb'
+require 'spec_helper.rb'
 
 describe "Rake::DmgTask" do
   it "should build a DmgTask object" do
@@ -152,20 +152,20 @@ describe "A Rake::DmgTask object" do
   end
 
   it "should default to not have administration rights" do
-    @rose.admin_rights.should be_false
+    @rose.admin_rights.should be_falsey
   end
 
   it "should allow setting administration rights on creation" do
     custom_pkg_dmg = Rake::DmgTask.new 'cyclamen', :noversion do |dmg|
       dmg.admin_rights = true
     end
-    custom_pkg_dmg.admin_rights.should be_true
+    custom_pkg_dmg.admin_rights.should be_truthy
   end
 
   it "should allow setting administration rights after creation" do
-    @rose.admin_rights.should be_false
+    @rose.admin_rights.should be_falsey
     @rose.admin_rights = true
-    @rose.admin_rights.should be_true
+    @rose.admin_rights.should be_truthy
   end
 
   it "should change DMG build options based on administration rights presence" do
