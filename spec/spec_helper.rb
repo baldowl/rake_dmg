@@ -3,57 +3,30 @@ require 'rspec'
 
 require 'rake/dmg'
 
-module RakeTaskMatchers
-  # Custom matcher to check for tasks being defined or not.
-  class BeDefined
-    def matches?(task_name)
-      @task_name = task_name
-      Rake::Task.task_defined?(task_name)
-    end
-    def failure_message
-      "expected #{@task_name.inspect} to be defined"
-    end
-    def negative_failure_message
-      "expected #{@task_name.inspect} not to be define"
-    end
+RSpec::Matchers.define :be_defined do
+  match do |task_name|
+    Rake::Task.task_defined?(task_name)
+  end
+end
+
+RSpec::Matchers.define :have_prerequisites do |*prereq_tasks|
+  match do |task_name|
+    list = Rake::Task[task_name].prerequisites
+    prereq_tasks.all? {|t| list.include? t}
   end
 
-  # True if the tested string is the name of a Rake task.
-  #
-  #   'wonderland'.should be_defined
-  def be_defined
-    BeDefined.new
+  match_when_negated do |task_name|
+    list = Rake::Task[task_name].prerequisites
+    prereq_tasks.none? {|t| list.include? t}
   end
 
-  # Custom matcher to check if a given task has specific prerequisites.
-  class HavePrerequisites
-    def initialize(prereq_tasks)
-      @prereq_tasks = prereq_tasks
-    end
-    def matches?(task_name)
-      @task_name = task_name
-      @prereq_tasks.all? do |t|
-        Rake::Task[@task_name].prerequisites.include?(t)
-      end
-    end
-    def failure_message
-      "expected #{@prereq_tasks.inspect} to be prerequistes of #{@task_name.inspect}"
-    end
-    def negative_failure_message
-      "expected #{@prereq_tasks.inspect} not to be prerequisites of #{@task_name.inspect}"
-    end
-  end
-
-  # True if the tested string is the name of a Rake task with some specific
-  # prerequisites.
-  #
-  #   'lock_the_dor'.should have_prerequisites('pick_up_the_keys')
-  #   'have_breakfast'.should have_prerequisites('wake_up', 'get_up')
-  def have_prerequisites(*prereq_tasks)
-    HavePrerequisites.new prereq_tasks
+  failure_message do |task_name|
+    "expected prerequisite tasks: #{prereq_tasks.join(', ')}; got #{Rake::Task[task_name].prerequisites.join(', ')}"
   end
 end
 
 RSpec.configure do |conf|
-  conf.include RakeTaskMatchers
+  conf.expect_with :rspec do |c|
+    c.syntax = :should
+  end
 end
